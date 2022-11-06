@@ -1,13 +1,17 @@
-import React from "react"; //* SIEMPRE importar react (Buenas practicas)
+import React from "react";
 import "./App.css";
+import { Footer } from "./components/Footer";
 import ItemListContainer from "./components/ItemListContainer";
 import NavBar from "./components/NavBar";
+
+
 
 function App() {
   return (
     <>
       <NavBar />
       <ItemListContainer greeting={"Primer Elemento"} />
+      <Footer />
     </>
   );
 }

@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -13,7 +13,11 @@ import logo from "../logo.png";
 import CartWidget from "./CartWidget";
 
 function ResponsiveAppBar() {
-  const pages = ["Inicio", "Nosotros", "Ofertas"]; //* Recomiendo poner las pages dentro del componente!
+  const pages = [
+    { name: "Inicio", url: "/" },
+    { name: "Nosotros", url: "/nosotros" },
+    { name: "Ofertas", url: "/ofertas" },
+  ];
   const [anchorElNav, setAnchorElNav] = React.useState(null);
 
   const handleOpenNavMenu = (event) => {
@@ -25,7 +29,7 @@ function ResponsiveAppBar() {
   };
 
   return (
-    <AppBar position="static">
+    <AppBar sx={{ bgcolor: "black" }} position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -58,8 +62,8 @@ function ResponsiveAppBar() {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+                <MenuItem key={page.name} onClick={handleCloseNavMenu}>
+                  <Typography textAlign="center">{page.name}</Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -94,16 +98,18 @@ function ResponsiveAppBar() {
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
               <Button
-                key={page}
+                key={page.name}
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: "white", display: "block" }}
               >
-                {page}
+                {page.name}
               </Button>
             ))}
           </Box>
-
-          <CartWidget></CartWidget>
+          <Button>
+            <CartWidget></CartWidget>
+          </Button>
+          
         </Toolbar>
       </Container>
     </AppBar>
