@@ -1,29 +1,36 @@
-import React from 'react'
-import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import ItemList from "./ItemList";
+import {allProducts} from "./data.js"
+// import './ItemListContainer.css'
 
-const ItemListContainer = ({ greeting }) => {
-    return (
-        <>
-            <Box
-                sx={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    textAlign: 'center',
-                    '& > :not(style)': {
-                        m: 1,
-                        p: 2,
-                    },
-                }}
-            >
-                <Paper elevation={3}>
-                    <h1>{greeting}</h1>
-                </Paper>
-            </Box>
 
-        </>
-    )
-}
+const ItemListContainer = () => {
+  const { idcategory } = useParams();
 
-export default ItemListContainer
+  const [productos, setProductos] = useState([]);
+
+  useEffect(() => {
+    const productosPromise = new Promise((res, rej) => {
+      setTimeout(() => {
+        res(allProducts);
+      }, 2000);
+    });
+    productosPromise.then((res) => {
+        if (idcategory) {
+            setProductos(res.filter((item) => item.category === idcategory))
+            // console.log(Productos)
+        } else {
+            setProductos(res);
+        }
+    });
+  }, [idcategory]);
+
+  return (
+    <div className="itemsContainer">
+        <ItemList productos={productos}/>
+    </div>
+  );
+};
+
+export default ItemListContainer;

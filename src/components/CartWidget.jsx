@@ -1,20 +1,20 @@
-import React from 'react';
-import Tooltip from '@mui/material/Tooltip';
-import Box from '@mui/material/Box';
-import IconButton from '@mui/material/IconButton';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCartOutlined';
-
+import Box from "@mui/material/Box";
+import Tooltip from "@mui/material/Tooltip";
+import React from "react";
+// import IconButton from "@mui/material/IconButton";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCartOutlined";
+import Button from "@mui/material/Button";
 
 const CartWidget = () => {
-    return (
-        <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Abrir Carrito">
-                <IconButton sx={{ p: 0 }}>
-                    <ShoppingCartIcon style={{ color: '#fff' }}></ShoppingCartIcon>
-                </IconButton>
-            </Tooltip>
-        </Box>
-    )
-}
+  return (
+    <Box sx={{ flexGrow: 0 }}>
+      <Button>
+        <Tooltip title="Abrir Carrito">
+            <ShoppingCartIcon style={{ color: "#fff" }}></ShoppingCartIcon>
+        </Tooltip>
+      </Button>
+    </Box>
+  );
+};
 
-export default CartWidget
+export default CartWidget;

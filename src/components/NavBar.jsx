@@ -1,23 +1,31 @@
-import React from "react";
+import MenuIcon from "@mui/icons-material/Menu";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
-import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import IconButton from "@mui/material/IconButton";
+import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import React from "react";
+import { Link } from "react-router-dom";
 import logo from "../logo.png";
 import CartWidget from "./CartWidget";
+import { allProducts } from "./data.js";
 
 function ResponsiveAppBar() {
-  const pages = [
-    { name: "Inicio", url: "/" },
-    { name: "Nosotros", url: "/nosotros" },
-    { name: "Ofertas", url: "/ofertas" },
-  ];
+  const pages = [];
+  let categorias = [];
+  allProducts.forEach((product) => {
+    categorias.push(product.category);
+    categorias = [...new Set(categorias)];
+  });
+  categorias.forEach((categoria) => {
+    let element = { name: categoria, url: "/category/" + categoria };
+    pages.push(element);
+  });
+
   const [anchorElNav, setAnchorElNav] = React.useState(null);
 
   const handleOpenNavMenu = (event) => {
@@ -62,28 +70,33 @@ function ResponsiveAppBar() {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page.name} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page.name}</Typography>
-                </MenuItem>
+                <Link
+                  style={{ color: "black", textDecoration: "none" }}
+                  to={page.url}
+                >
+                  <MenuItem
+                    style={{ textTransform: "uppercase" }}
+                    key={page.name}
+                  >
+                    {page.name}
+                  </MenuItem>
+                </Link>
               ))}
             </Menu>
           </Box>
-          <a
-            sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
-            href="./index.html"
-          >
+          <Link sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} to="/">
             <img
               style={{ width: "80px" }}
               src={logo}
               className="MiPC-logo"
               alt="logo"
             />
-          </a>
+          </Link>
           <Typography
             variant="h5"
             noWrap
             component="a"
-            href=""
+            // href=""
             sx={{
               mr: 2,
               display: { xs: "flex", md: "none" },
@@ -97,19 +110,20 @@ function ResponsiveAppBar() {
           ></Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
-              <Button
-                key={page.name}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "white", display: "block" }}
+              <Link
+                style={{ color: "white", textDecoration: "none" }}
+                to={page.url}
               >
-                {page.name}
-              </Button>
+                <Button
+                  key={page.name}
+                  sx={{ my: 2, color: "white", display: "block" }}
+                >
+                  {page.name}
+                </Button>
+              </Link>
             ))}
           </Box>
-          <Button>
-            <CartWidget></CartWidget>
-          </Button>
-          
+          <CartWidget></CartWidget>
         </Toolbar>
       </Container>
     </AppBar>
